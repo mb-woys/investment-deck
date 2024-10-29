@@ -1,0 +1,175 @@
+{
+  "home": {
+    "title": "Welcome to Contrary Portfolio",
+    "description": "Track and manage your venture investments efficiently. View your portfolio, analyze performance, and make informed decisions."
+  },
+  "Login": {
+    "title": "Contrary Portfolio",
+    "subtitle": "Sign in to manage your investments",
+    "fields": {
+      "email": "Email address",
+      "password": "Password"
+    },
+    "actions": {
+      "signIn": "Sign in",
+      "signing": "Signing in..."
+    },
+    "errors": {
+      "authFailed": "Authentication failed"
+    },
+    "demo": {
+      "credentials": "Use demo credentials: admin@contrary.com / password123"
+    }
+  },
+  "Dashboard": {
+    "overview": {
+      "totalValue": "Total Portfolio Value",
+      "activeInvestments": "Active Investments",
+      "latestValuation": "Latest Valuation"
+    },
+    "recent": {
+      "title": "Recent Investments"
+    },
+    "distribution": {
+      "title": "Investment Distribution"
+    }
+  },
+  "api": {
+    "errors": {
+      "fetchCompanies": "Failed to fetch companies",
+      "createCompany": "Failed to create company",
+      "updateCompany": "Failed to update company",
+      "deleteCompany": "Failed to delete company",
+      "fetchInvestments": "Failed to fetch investments",
+      "createInvestment": "Failed to create investment",
+      "updateInvestment": "Failed to update investment",
+      "deleteInvestment": "Failed to delete investment"
+    }
+  },
+  "AppLayout": {
+    "navigation": {
+      "dashboard": "Dashboard",
+      "companies": "Companies",
+      "investments": "Investments",
+      "reports": "Reports",
+      "signOut": "Sign Out"
+    }
+  },
+  "CompaniesPage": {
+    "header": {
+      "title": "Portfolio Companies",
+      "noCompanies": "No companies found",
+      "addCompany": "Add Company"
+    },
+    "filters": {
+      "allStatuses": "All Statuses",
+      "initialInvestment": "Initial Investment",
+      "currentValuation": "Current Valuation",
+      "latestRound": "Latest Round",
+      "returnMultiple": "Return Multiple"
+    },
+    "statuses": {
+      "active": "Active",
+      "acquired": "Acquired",
+      "ipo": "IPO",
+      "defunct": "Defunct"
+    },
+    "errors": {
+      "fetchError": "Failed to load companies"
+    }
+  },
+  "AddCompanyDialog": {
+    "title": "Add New Company",
+    "labels": {
+      "companyName": "Company Name",
+      "sector": "Sector",
+      "status": "Status"
+    },
+    "placeholders": {
+      "companyName": "Enter company name",
+      "sector": "Enter sector (e.g., FinTech, AI, SaaS)"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "addCompany": "Add Company",
+      "adding": "Adding..."
+    }
+  },
+  "DashboardPage": {
+    "metrics": {
+      "portfolioValue": "Total Portfolio Value",
+      "ytdGrowth": "YTD Growth",
+      "activeInvestments": "Active Investments",
+      "roundsCount": "Across {roundsCount} Rounds",
+      "latestInvestment": "Latest Investment",
+      "amount": "{amount}M",
+      "roundCompany": "{round} - {company}"
+    },
+    "charts": {
+      "portfolioGrowth": "Portfolio Growth",
+      "investmentActivity": "Investment Activity"
+    },
+    "recentInvestments": "Recent Investments"
+  },
+  "InvestmentsPage": {
+    "title": "Investment Rounds",
+    "filters": {
+      "allRounds": "All Rounds",
+      "addInvestment": "Add Investment"
+    },
+    "tableHeaders": {
+      "company": "Company",
+      "round": "Round",
+      "amount": "Investment Amount",
+      "valuation": "Valuation",
+      "equity": "Equity %",
+      "date": "Date"
+    },
+    "noInvestments": "No investments found",
+    "error": "Failed to load investments"
+  },
+  "AddInvestmentForm": {
+    "title": "Add New Investment",
+    "labels": {
+      "company": "Company",
+      "round": "Investment Round",
+      "amount": "Investment Amount (M$)",
+      "valuation": "Company Valuation (M$)",
+      "equity": "Equity Percentage",
+      "date": "Investment Date"
+    },
+    "placeholders": {
+      "amount": "Enter investment amount",
+      "valuation": "Enter company valuation",
+      "equity": "Enter equity percentage"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "add": "Add Investment",
+      "adding": "Adding..."
+    },
+    "error": "Failed to fetch companies"
+  },
+  "ReportsPage": {
+    "title": "Portfolio Analytics",
+    "summary": {
+      "portfolioValue": "Total Portfolio Value",
+      "ytdGrowth": "YTD Growth",
+      "activeCompanies": "Active Companies",
+      "totalInvestments": "Total Investments",
+      "allTime": "All time",
+      "currentPortfolio": "Current portfolio"
+    },
+    "distribution": {
+      "investmentByRound": "Investment by Round",
+      "returnMultiple": "Return Multiple by Company"
+    },
+    "performance": {
+      "title": "Portfolio Performance",
+      "year": "Year",
+      "investments": "Investments",
+      "returns": "Returns",
+      "performance": "Performance"
+    }
+  }
+}

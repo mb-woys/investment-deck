@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Tracker
+
+A Next.js application for tracking venture capital investments and portfolio companies.
+
+## Features
+
+- 📊 Dashboard with portfolio overview
+- 🏢 Company management
+- 💰 Investment tracking
+- 📈 Portfolio analytics and reports
+- 🔐 Authentication
+- 🌐 Internationalization
+- 🎨 Responsive design with Tailwind CSS
+
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Database:** PostgreSQL with Prisma ORM
+- **Authentication:** NextAuth.js
+- **Styling:** Tailwind CSS
+- **Charts:** Recharts
+- **Containerization:** Docker
+- **API:** REST with built-in Next.js API routes
+- **Type Safety:** TypeScript
+- **Form Validation:** Zod
+- **Internationalization:** next-intl
+
+## Prerequisites
+
+- Node.js (v18 or later)
+- Docker and Docker Compose
+- npm or yarn
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd portfolio-tracker
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Set up environment variables**
+   Create a `.env` file in the root directory:
+   ```env
+   DATABASE_URL="postgresql://admin:password@localhost:5432/portfolio?schema=public"
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Start the database**
+   ```bash
+   npm run docker:up
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5. **Set up the database**
+   ```bash
+   # Generate Prisma client
+   npm run prisma:generate
 
-## Learn More
+   # Push database schema
+   npm run prisma:push
 
-To learn more about Next.js, take a look at the following resources:
+   # Seed the database
+   npm run prisma:seed
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application will be available at `http://localhost:3000/en`
 
-## Deploy on Vercel
+## Available Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `npm run dev` - Start development server
+- `npm run build` - Build the application
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run docker:up` - Start Docker containers
+- `npm run docker:down` - Stop Docker containers
+- `npm run prisma:generate` - Generate Prisma client
+- `npm run prisma:push` - Push database schema
+- `npm run prisma:studio` - Open Prisma Studio
+- `npm run prisma:seed` - Seed the database
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Database Schema
+
+The application uses two main models:
+
+- **Company**: Represents portfolio companies
+- **Investment**: Tracks investments in companies
+
+For detailed schema information, see `prisma/schema.prisma`
+
+## Authentication
+
+WIP: The application will be using NextAuth.js for authentication. 
+Right now it's not implemented
+
+Demo credentials:
+- Email: admin@contrary.com
+- Password: password123

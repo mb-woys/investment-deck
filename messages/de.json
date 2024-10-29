@@ -1,0 +1,176 @@
+{
+    "home": {
+      "title": "Willkommen beim Contrary Portfolio",
+      "description": "Verfolgen und verwalten Sie Ihre Risikokapitalanlagen effizient. Betrachten Sie Ihr Portfolio, analysieren Sie die Leistung und treffen Sie fundierte Entscheidungen."
+    },
+    "Login": {
+      "title": "Contrary Portfolio",
+      "subtitle": "Melden Sie sich an, um Ihre Investitionen zu verwalten",
+      "fields": {
+        "email": "E-Mail-Adresse",
+        "password": "Passwort"
+      },
+      "actions": {
+        "signIn": "Anmelden",
+        "signing": "Anmeldung läuft..."
+      },
+      "errors": {
+        "authFailed": "Authentifizierung fehlgeschlagen"
+      },
+      "demo": {
+        "credentials": "Verwenden Sie die Demodaten: admin@contrary.com / password123"
+      }
+    },    
+    "Dashboard": {
+      "overview": {
+        "totalValue": "Gesamtportfolio-Wert",
+        "activeInvestments": "Aktive Investitionen",
+        "latestValuation": "Letzte Bewertung"
+      },
+      "recent": {
+        "title": "Neueste Investitionen"
+      },
+      "distribution": {
+        "title": "Investitionsverteilung"
+      }
+    },
+    "api": {
+      "errors": {
+        "fetchCompanies": "Fehler beim Abrufen der Unternehmen",
+        "createCompany": "Fehler beim Erstellen des Unternehmens",
+        "updateCompany": "Fehler beim Aktualisieren des Unternehmens",
+        "deleteCompany": "Fehler beim Löschen des Unternehmens",
+        "fetchInvestments": "Fehler beim Abrufen der Investitionen",
+        "createInvestment": "Fehler beim Erstellen der Investition",
+        "updateInvestment": "Fehler beim Aktualisieren der Investition",
+        "deleteInvestment": "Fehler beim Löschen der Investition"
+      }
+    },
+    "AppLayout": {
+      "navigation": {
+        "dashboard": "Dashboard",
+        "companies": "Unternehmen",
+        "investments": "Investitionen",
+        "reports": "Berichte",
+        "signOut": "Abmelden"
+      }
+    },
+    "CompaniesPage": {
+      "header": {
+        "title": "Portfolio-Unternehmen",
+        "noCompanies": "Keine Unternehmen gefunden",
+        "addCompany": "Unternehmen hinzufügen"
+      },
+      "filters": {
+        "allStatuses": "Alle Status",
+        "initialInvestment": "Erstinvestition",
+        "currentValuation": "Aktuelle Bewertung",
+        "latestRound": "Letzte Runde",
+        "returnMultiple": "Renditemultiplikator"
+      },
+      "statuses": {
+        "active": "Aktiv",
+        "acquired": "Erworben",
+        "ipo": "Börsengang",
+        "defunct": "Stillgelegt"
+      },
+      "errors": {
+        "fetchError": "Fehler beim Laden der Unternehmen"
+      }
+    },
+    "AddCompanyDialog": {
+      "title": "Neues Unternehmen hinzufügen",
+      "labels": {
+        "companyName": "Unternehmensname",
+        "sector": "Sektor",
+        "status": "Status"
+      },
+      "placeholders": {
+        "companyName": "Unternehmensname eingeben",
+        "sector": "Sektor eingeben (z.B. FinTech, KI, SaaS)"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "addCompany": "Unternehmen hinzufügen",
+        "adding": "Wird hinzugefügt..."
+      }
+    },
+    "DashboardPage": {
+      "metrics": {
+        "portfolioValue": "Gesamtportfolio-Wert",
+        "ytdGrowth": "YTD-Wachstum",
+        "activeInvestments": "Aktive Investitionen",
+        "roundsCount": "In {roundsCount} Runden",
+        "latestInvestment": "Letzte Investition",
+        "amount": "{amount}M",
+        "roundCompany": "{round} - {company}"
+      },
+      "charts": {
+        "portfolioGrowth": "Portfolio-Wachstum",
+        "investmentActivity": "Investitionsaktivität"
+      },
+      "recentInvestments": "Neueste Investitionen"
+    },
+    "InvestmentsPage": {
+      "title": "Investitionsrunden",
+      "filters": {
+        "allRounds": "Alle Runden",
+        "addInvestment": "Investition hinzufügen"
+      },
+      "tableHeaders": {
+        "company": "Unternehmen",
+        "round": "Runde",
+        "amount": "Investitionsbetrag",
+        "valuation": "Bewertung",
+        "equity": "Eigenkapital %",
+        "date": "Datum"
+      },
+      "noInvestments": "Keine Investitionen gefunden",
+      "error": "Fehler beim Laden der Investitionen"
+    },
+    "AddInvestmentForm": {
+      "title": "Neue Investition hinzufügen",
+      "labels": {
+        "company": "Unternehmen",
+        "round": "Investitionsrunde",
+        "amount": "Investitionsbetrag (M$)",
+        "valuation": "Unternehmensbewertung (M$)",
+        "equity": "Eigenkapitalprozentsatz",
+        "date": "Investitionsdatum"
+      },
+      "placeholders": {
+        "amount": "Investitionsbetrag eingeben",
+        "valuation": "Unternehmensbewertung eingeben",
+        "equity": "Eigenkapitalprozentsatz eingeben"
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "add": "Investition hinzufügen",
+        "adding": "Wird hinzugefügt..."
+      },
+      "error": "Fehler beim Abrufen der Unternehmen"
+    },
+    "ReportsPage": {
+      "title": "Portfolio-Analyse",
+      "summary": {
+        "portfolioValue": "Gesamtportfolio-Wert",
+        "ytdGrowth": "YTD-Wachstum",
+        "activeCompanies": "Aktive Unternehmen",
+        "totalInvestments": "Gesamtinvestitionen",
+        "allTime": "Gesamtzeitraum",
+        "currentPortfolio": "Aktuelles Portfolio"
+      },
+      "distribution": {
+        "investmentByRound": "Investition nach Runde",
+        "returnMultiple": "Renditemultiplikator nach Unternehmen"
+      },
+      "performance": {
+        "title": "Portfolio-Leistung",
+        "year": "Jahr",
+        "investments": "Investitionen",
+        "returns": "Renditen",
+        "performance": "Leistung"
+      }
+    }
+  }
+  

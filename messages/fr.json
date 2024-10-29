@@ -1,0 +1,176 @@
+{
+    "home": {
+      "title": "Bienvenue dans le portefeuille Contrary",
+      "description": "Suivez et gérez efficacement vos investissements en capital-risque. Visualisez votre portefeuille, analysez la performance et prenez des décisions éclairées."
+    },
+    "Login": {
+      "title": "Portefeuille Contrary",
+      "subtitle": "Connectez-vous pour gérer vos investissements",
+      "fields": {
+        "email": "Adresse e-mail",
+        "password": "Mot de passe"
+      },
+      "actions": {
+        "signIn": "Se connecter",
+        "signing": "Connexion en cours..."
+      },
+      "errors": {
+        "authFailed": "Échec de l'authentification"
+      },
+      "demo": {
+        "credentials": "Utilisez les identifiants de démonstration : admin@contrary.com / password123"
+      }
+    },
+    "Dashboard": {
+      "overview": {
+        "totalValue": "Valeur totale du portefeuille",
+        "activeInvestments": "Investissements actifs",
+        "latestValuation": "Dernière évaluation"
+      },
+      "recent": {
+        "title": "Investissements récents"
+      },
+      "distribution": {
+        "title": "Répartition des investissements"
+      }
+    },
+    "api": {
+      "errors": {
+        "fetchCompanies": "Échec de la récupération des entreprises",
+        "createCompany": "Échec de la création de l'entreprise",
+        "updateCompany": "Échec de la mise à jour de l'entreprise",
+        "deleteCompany": "Échec de la suppression de l'entreprise",
+        "fetchInvestments": "Échec de la récupération des investissements",
+        "createInvestment": "Échec de la création de l'investissement",
+        "updateInvestment": "Échec de la mise à jour de l'investissement",
+        "deleteInvestment": "Échec de la suppression de l'investissement"
+      }
+    },
+    "AppLayout": {
+      "navigation": {
+        "dashboard": "Tableau de bord",
+        "companies": "Entreprises",
+        "investments": "Investissements",
+        "reports": "Rapports",
+        "signOut": "Se déconnecter"
+      }
+    },
+    "CompaniesPage": {
+      "header": {
+        "title": "Entreprises du portefeuille",
+        "noCompanies": "Aucune entreprise trouvée",
+        "addCompany": "Ajouter une entreprise"
+      },
+      "filters": {
+        "allStatuses": "Tous les statuts",
+        "initialInvestment": "Investissement initial",
+        "currentValuation": "Évaluation actuelle",
+        "latestRound": "Dernier tour",
+        "returnMultiple": "Multiplicateur de retour"
+      },
+      "statuses": {
+        "active": "Actif",
+        "acquired": "Acquis",
+        "ipo": "Introduction en bourse",
+        "defunct": "Désaffecté"
+      },
+      "errors": {
+        "fetchError": "Échec du chargement des entreprises"
+      }
+    },
+    "AddCompanyDialog": {
+      "title": "Ajouter une nouvelle entreprise",
+      "labels": {
+        "companyName": "Nom de l'entreprise",
+        "sector": "Secteur",
+        "status": "Statut"
+      },
+      "placeholders": {
+        "companyName": "Entrez le nom de l'entreprise",
+        "sector": "Entrez le secteur (ex. FinTech, IA, SaaS)"
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "addCompany": "Ajouter l'entreprise",
+        "adding": "Ajout en cours..."
+      }
+    },
+    "DashboardPage": {
+      "metrics": {
+        "portfolioValue": "Valeur totale du portefeuille",
+        "ytdGrowth": "Croissance YTD",
+        "activeInvestments": "Investissements actifs",
+        "roundsCount": "Dans {roundsCount} tours",
+        "latestInvestment": "Dernier investissement",
+        "amount": "{amount}M",
+        "roundCompany": "{round} - {company}"
+      },
+      "charts": {
+        "portfolioGrowth": "Croissance du portefeuille",
+        "investmentActivity": "Activité d'investissement"
+      },
+      "recentInvestments": "Investissements récents"
+    },
+    "InvestmentsPage": {
+      "title": "Tours d'investissement",
+      "filters": {
+        "allRounds": "Tous les tours",
+        "addInvestment": "Ajouter un investissement"
+      },
+      "tableHeaders": {
+        "company": "Entreprise",
+        "round": "Tour",
+        "amount": "Montant de l'investissement",
+        "valuation": "Évaluation",
+        "equity": "Pourcentage d'équité",
+        "date": "Date"
+      },
+      "noInvestments": "Aucun investissement trouvé",
+      "error": "Échec du chargement des investissements"
+    },
+    "AddInvestmentForm": {
+      "title": "Ajouter un nouvel investissement",
+      "labels": {
+        "company": "Entreprise",
+        "round": "Tour d'investissement",
+        "amount": "Montant de l'investissement (M$)",
+        "valuation": "Évaluation de l'entreprise (M$)",
+        "equity": "Pourcentage d'équité",
+        "date": "Date de l'investissement"
+      },
+      "placeholders": {
+        "amount": "Entrez le montant de l'investissement",
+        "valuation": "Entrez l'évaluation de l'entreprise",
+        "equity": "Entrez le pourcentage d'équité"
+      },
+      "buttons": {
+        "cancel": "Annuler",
+        "add": "Ajouter l'investissement",
+        "adding": "Ajout en cours..."
+      },
+      "error": "Échec de la récupération des entreprises"
+    },
+    "ReportsPage": {
+      "title": "Analytique du portefeuille",
+      "summary": {
+        "portfolioValue": "Valeur totale du portefeuille",
+        "ytdGrowth": "Croissance YTD",
+        "activeCompanies": "Entreprises actives",
+        "totalInvestments": "Investissements totaux",
+        "allTime": "De tout temps",
+        "currentPortfolio": "Portefeuille actuel"
+      },
+      "distribution": {
+        "investmentByRound": "Investissement par tour",
+        "returnMultiple": "Multiplicateur de retour par entreprise"
+      },
+      "performance": {
+        "title": "Performance du portefeuille",
+        "year": "Année",
+        "investments": "Investissements",
+        "returns": "Rendements",
+        "performance": "Performance"
+      }
+    }
+  }
+  
