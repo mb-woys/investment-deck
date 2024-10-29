@@ -35,7 +35,7 @@ A Next.js application for tracking venture capital investments and portfolio com
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:mb-woys/investment-deck.git
    cd portfolio-tracker
    ```
 
