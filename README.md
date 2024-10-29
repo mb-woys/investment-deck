@@ -46,16 +46,20 @@ A Next.js application for tracking venture capital investments and portfolio com
 
 3. **Set up environment variables**
    Create a `.env` file in the root directory:
+   ```bash
+   touch .env
+   ```
+   Copy this content to your .env:
    ```env
    DATABASE_URL="postgresql://admin:password@localhost:5432/portfolio?schema=public"
    ```
 
-4. **Start the database**
+5. **Start the database**
    ```bash
    npm run docker:up
    ```
 
-5. **Set up the database**
+6. **Set up the database**
    ```bash
    # Generate Prisma client
    npm run prisma:generate
@@ -67,7 +71,7 @@ A Next.js application for tracking venture capital investments and portfolio com
    npm run prisma:seed
    ```
 
-6. **Start the development server**
+7. **Start the development server**
    ```bash
    npm run dev
    ```
