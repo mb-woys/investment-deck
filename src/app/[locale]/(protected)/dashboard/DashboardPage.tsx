@@ -1,28 +1,10 @@
 'use client'
 
-import { CompanyStatus, Round } from '@prisma/client'
+import { Company, Investment } from '@prisma/client'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { LineChart, Line } from 'recharts'
+import { calculateMetrics, prepareChartData } from '@/utils/metrics';
 import { useTranslations } from 'next-intl'
-
-interface Company {
-    id: string
-    name: string
-    sector: string
-    status: CompanyStatus
-    investments: Investment[]
-}
-
-interface Investment {
-    id: string
-    companyId: string
-    round: Round
-    amount: number
-    valuation: number
-    equityPercentage: number
-    date: string
-    company: Company
-}
 
 interface DashboardPageProps {
     initialData: {
@@ -35,63 +17,8 @@ export const DashboardPage = ({ initialData }: DashboardPageProps) => {
     const { companies, investments } = initialData
     const t = useTranslations('DashboardPage')
 
-    const calculateMetrics = () => {
-        const portfolioValue = companies.reduce((total, company) => {
-            const latestInvestment = company.investments
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0]
-            return total + (latestInvestment?.valuation || 0)
-        }, 0)
-
-        const currentDate = new Date()
-        const startOfYear = new Date(currentDate.getFullYear(), 0, 1)
-        
-        const startValue = companies.reduce((total, company) => {
-            const investmentAtStart = company.investments
-                .filter(inv => new Date(inv.date) < startOfYear)
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0]
-            return total + (investmentAtStart?.valuation || 0)
-        }, 0)
-
-        const ytdGrowth = startValue ? ((portfolioValue - startValue) / startValue) * 100 : 0
-        const latestInvestment = investments[0]
-        const activeCompanies = companies.filter(c => c.status === CompanyStatus.ACTIVE).length
-        const roundsCount = new Set(investments.map(i => i.round)).size
-
-        return {
-            portfolioValue: Number(portfolioValue.toFixed(1)),
-            ytdGrowth: Number(ytdGrowth.toFixed(1)),
-            activeCompanies,
-            roundsCount,
-            latestInvestment
-        }
-    }
-
-    const prepareChartData = () => {
-        const monthlyData = investments.reduce((acc, inv) => {
-            const date = new Date(inv.date)
-            const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
-            
-            if (!acc[monthKey]) {
-                acc[monthKey] = {
-                    month: monthKey,
-                    totalInvestment: 0,
-                    totalValuation: 0,
-                    investmentCount: 0
-                }
-            }
-            
-            acc[monthKey].totalInvestment += inv.amount
-            acc[monthKey].totalValuation += inv.valuation
-            acc[monthKey].investmentCount++
-            
-            return acc
-        }, {} as Record<string, any>)
-
-        return Object.values(monthlyData).sort((a, b) => a.month.localeCompare(b.month))
-    }
-
-    const metrics = calculateMetrics()
-    const chartData = prepareChartData()
+    const metrics = calculateMetrics(companies, investments);
+    const chartData = prepareChartData(investments);
 
     return (
         <div className="max-w-7xl mx-auto p-6">

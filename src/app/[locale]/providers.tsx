@@ -13,9 +13,24 @@ interface ProvidersProps {
 
 export const Providers = ({ messages, locale, children }: ProvidersProps) => {
     const [queryClient] = useState(() => new QueryClient())
+    const now = new Date()
 
     return (
-        <NextIntlClientProvider messages={messages} locale={locale}>
+        <NextIntlClientProvider 
+            messages={messages} 
+            locale={locale}
+            timeZone="UTC"
+            now={now}
+            formats={{
+                dateTime: {
+                    short: {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                    }
+                }
+            }}
+        >
             <QueryClientProvider client={queryClient}>
                 {children}
             </QueryClientProvider>

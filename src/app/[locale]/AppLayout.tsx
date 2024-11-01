@@ -1,13 +1,11 @@
 'use client'
 
 import { ReactNode } from 'react'
-import Link from 'next/link'
-import { usePathname, useParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { ROUTES } from '@/routes'
 import { useTranslations } from 'next-intl'
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
-import { signOut } from 'next-auth/react'
-import { type Locale } from '@/i18n'
+import { useLocalizedNavigation } from '@/hooks/useLocalizedNavigation'
 
 type AppLayoutProps = {
     children: ReactNode
@@ -15,18 +13,14 @@ type AppLayoutProps = {
 
 export const AppLayout = ({ children }: AppLayoutProps) => {
     const pathname = usePathname()
-    const { locale } = useParams()
     const t = useTranslations('AppLayout.navigation')
-
-    const handleSignOut = async () => {
-        await signOut({ callbackUrl: `/${locale}/auth/login` })
-    }
+    const { navigate } = useLocalizedNavigation()
 
     const navigation = [
-        { name: t('dashboard'), route: ROUTES.dashboard.route },
-        { name: t('companies'), route: ROUTES.companies.route },
-        { name: t('investments'), route: ROUTES.investments.route },
-        { name: t('reports'), route: ROUTES.reports.route }
+        { name: t('dashboard'), route: () => navigate(ROUTES.dashboard.route) },
+        { name: t('companies'), route: () => navigate(ROUTES.companies.route) },
+        { name: t('investments'), route: () => navigate(ROUTES.investments.route) },
+        { name: t('reports'), route: () => navigate(ROUTES.reports.route) }
     ]
 
     return (
@@ -40,12 +34,11 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
 
                         <nav className="flex space-x-8">
                             {navigation.map((item) => {
-                                const href = item.route({}, locale as Locale)
-                                const isActive = pathname.startsWith(href)
+                                const isActive = pathname.includes(item.name.toLowerCase())
                                 return (
-                                    <Link
+                                    <button
                                         key={item.name}
-                                        href={href}
+                                        onClick={item.route}
                                         className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                                             isActive
                                                 ? 'border-blue-500 text-gray-900'
@@ -53,19 +46,13 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
                                         }`}
                                     >
                                         {item.name}
-                                    </Link>
+                                    </button>
                                 )
                             })}
                         </nav>
 
-                        <nav className="flex items-center space-x-4">
+                        <nav className="flex items-center">
                             <LanguageSwitcher />
-                            {/* <button
-                                onClick={handleSignOut}
-                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                            >
-                                {t('signOut')}
-                            </button> */}
                         </nav>
                     </div>
                 </div>

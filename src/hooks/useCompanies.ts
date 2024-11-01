@@ -1,22 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { API_ROUTES } from '@/routes'
-import { CompanyStatus } from '@prisma/client'
+import { CompanyStatus, Company, Investment } from '@prisma/client'
+import { useTranslations } from 'next-intl'
 
-interface Company {
-    id: string
-    name: string
-    sector: string
-    status: CompanyStatus
+export interface CompanyWithInvestments extends Company {
     investments: Investment[]
-}
-
-interface Investment {
-    id: string
-    round: string
-    amount: number
-    valuation: number
-    date: string
-    equityPercentage: number
 }
 
 interface CompanyFilters {
@@ -29,36 +17,52 @@ const QUERY_KEYS = {
     companyFilters: (filters: CompanyFilters) => [...QUERY_KEYS.companies, filters] as const,
 }
 
-export function useCompanies(locale: string, filters: CompanyFilters = {}) {
-    const queryParams = new URLSearchParams()
-    if (filters.status && filters.status !== 'ALL') queryParams.append('status', filters.status)
-    if (filters.sector && filters.sector !== 'ALL') queryParams.append('sector', filters.sector)
+export const getLatestInvestment = (company: CompanyWithInvestments) => {
+    return company.investments.sort((a, b) => 
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+    )[0]
+}
+
+export const calculateReturnMultiple = (company: CompanyWithInvestments) => {
+    const latestInvestment = getLatestInvestment(company)
+    const initialInvestment = company.investments[0]
+    if (!latestInvestment || !initialInvestment) return 1
+
+    return latestInvestment.valuation / initialInvestment.valuation
+}
+
+export function useCompanies(filters: CompanyFilters = {}) {
+    const t = useTranslations('CompaniesPage')
 
     return useQuery({
         queryKey: QUERY_KEYS.companyFilters(filters),
         queryFn: async () => {
-            const response = await fetch(`${API_ROUTES.companies.base(locale)}?${queryParams}`)
-            if (!response.ok) throw new Error('Failed to fetch companies')
-            return response.json() as Promise<Company[]>
+            const params = new URLSearchParams()
+            if (filters.status && filters.status !== 'ALL') params.append('status', filters.status)
+            if (filters.sector && filters.sector !== 'ALL') params.append('sector', filters.sector)
+            
+            const response = await fetch(`/api/companies?${params}`)
+            if (!response.ok) throw new Error(t('errors.fetchError'))
+            return response.json() as Promise<CompanyWithInvestments[]>
         }
     })
 }
 
-export function useAddCompany(locale: string) {
+export function useAddCompany() {
+    const t = useTranslations('CompaniesPage')
     const queryClient = useQueryClient()
 
     return useMutation({
         mutationFn: async (data: Omit<Company, 'id' | 'investments'>) => {
-            const response = await fetch(API_ROUTES.companies.base(locale), {
+            const response = await fetch('/api/companies', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             })
-            if (!response.ok) throw new Error('Failed to add company')
-            return response.json() as Promise<Company>
+            if (!response.ok) throw new Error(t('errors.createCompany'))
+            return response.json() as Promise<CompanyWithInvestments>
         },
         onSuccess: () => {
-            // Invalidate and refetch companies queries
             queryClient.invalidateQueries({ queryKey: QUERY_KEYS.companies })
         }
     })

@@ -1,17 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Round } from '@prisma/client'
+import { Round, Company } from '@prisma/client'
 import { useParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslations } from 'next-intl'
 import { API_ROUTES } from '@/routes'
 import { Spinner } from '@/components/ui/Spinner'
-
-interface Company {
-    id: string
-    name: string
-}
 
 interface AddInvestmentFormProps {
     onSubmit: (data: InvestmentFormData) => void
@@ -39,7 +34,7 @@ export const AddInvestmentForm = ({
     const { data: companies = [] } = useQuery({
         queryKey: ['companies'],
         queryFn: async () => {
-            const response = await fetch(API_ROUTES.companies.base(locale as string))
+            const response = await fetch('/api/companies')
             if (!response.ok) throw new Error(t('error'))
             return response.json() as Promise<Company[]>
         },

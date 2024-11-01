@@ -1,28 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Round } from '@prisma/client'
+import { Round, Investment } from '@prisma/client'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useInvestments, useAddInvestment } from '@/hooks/useInvestments'
 import { AddInvestmentForm, type InvestmentFormData } from './components/AddInvestmentForm'
 import { Spinner } from '@/components/ui/Spinner'
-
-interface Company {
-    id: string
-    name: string
-}
-
-interface Investment {
-    id: string
-    companyId: string
-    round: Round
-    amount: number
-    valuation: number
-    equityPercentage: number
-    date: string
-    company: Company
-}
 
 interface InvestmentsPageProps {
     initialInvestments: Investment[]

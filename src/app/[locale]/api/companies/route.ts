@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/db'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import { getCompanies, createCompany } from './companyRepository'
 
 const CompanySchema = z.object({
     name: z.string(),
@@ -11,24 +11,10 @@ const CompanySchema = z.object({
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url)
-        const status = searchParams.get('status')
-        const sector = searchParams.get('sector')
+        const status = searchParams.get('status') as 'ACTIVE' | 'ACQUIRED' | 'IPO' | 'DEFUNCT' | undefined
+        const sector = searchParams.get('sector') || undefined
 
-        const where = {
-            ...(status && { status }),
-            ...(sector && { sector })
-        }
-
-        const companies = await prisma.company.findMany({
-            where,
-            include: {
-                investments: true,
-            },
-            orderBy: {
-                createdAt: 'desc'
-            }
-        })
-
+        const companies = await getCompanies(status, sector)
         return NextResponse.json(companies)
     } catch (error) {
         return NextResponse.json(
@@ -50,13 +36,7 @@ export async function POST(request: Request) {
             )
         }
 
-        const company = await prisma.company.create({
-            data: body,
-            include: {
-                investments: true
-            }
-        })
-
+        const company = await createCompany(validation.data)
         return NextResponse.json(company)
     } catch (error) {
         return NextResponse.json(

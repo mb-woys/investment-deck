@@ -4,27 +4,10 @@ import { useState } from 'react'
 import { CompanyStatus } from '@prisma/client'
 import { useTranslations } from 'next-intl'
 import { useParams } from 'next/navigation'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { AddCompanyDialog } from './components/AddCompanyDialog'
-import { API_ROUTES } from '@/routes'
+import { CompanyCard } from './components/CompanyCard'
 import { Spinner } from '@/components/ui/Spinner'
-
-interface Investment {
-    id: string
-    round: string
-    amount: number
-    valuation: number
-    date: string
-    equityPercentage: number
-}
-
-interface Company {
-    id: string
-    name: string
-    sector: string
-    status: CompanyStatus
-    investments: Investment[]
-}
+import { useCompanies, useAddCompany } from '@/hooks/useCompanies'
 
 export const CompaniesPage = () => {
     const t = useTranslations('CompaniesPage')
@@ -33,50 +16,12 @@ export const CompaniesPage = () => {
     const [statusFilter, setStatusFilter] = useState<CompanyStatus | 'ALL'>('ALL')
     const [sectorFilter, setSectorFilter] = useState<string>('ALL')
 
-    const queryClient = useQueryClient()
-
-    const { data: companies = [], isLoading, error } = useQuery({
-        queryKey: ['companies', statusFilter, sectorFilter],
-        queryFn: async () => {
-            const params = new URLSearchParams()
-            if (statusFilter !== 'ALL') params.append('status', statusFilter)
-            if (sectorFilter !== 'ALL') params.append('sector', sectorFilter)
-            
-            const response = await fetch(`${API_ROUTES.companies.base(locale as string)}?${params}`)
-            if (!response.ok) throw new Error(t('errors.fetchError'))
-            return response.json()
-        }
+    const { data: companies = [], isLoading, error } = useCompanies({
+        status: statusFilter !== 'ALL' ? statusFilter : undefined,
+        sector: sectorFilter !== 'ALL' ? sectorFilter : undefined
     })
-
-    const addCompanyMutation = useMutation({
-        mutationFn: async (data: Omit<Company, 'id' | 'investments'>) => {
-            const response = await fetch(API_ROUTES.companies.base(locale as string), {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            if (!response.ok) throw new Error(t('errors.createCompany'))
-            return response.json()
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['companies'] })
-            setShowAddDialog(false)
-        }
-    })
-
-    const getLatestInvestment = (company: Company) => {
-        return company.investments.sort((a, b) => 
-            new Date(b.date).getTime() - new Date(a.date).getTime()
-        )[0]
-    }
-
-    const calculateReturnMultiple = (company: Company) => {
-        const latestInvestment = getLatestInvestment(company)
-        const initialInvestment = company.investments[0]
-        if (!latestInvestment || !initialInvestment) return 1
-
-        return latestInvestment.valuation / initialInvestment.valuation
-    }
+    
+    const addCompanyMutation = useAddCompany()
 
     // Get unique sectors for filter
     const sectors = ['ALL', ...new Set(companies.map(c => c.sector))]
@@ -116,7 +61,7 @@ export const CompaniesPage = () => {
                     </button>
                 </div>
             </div>
-    
+
             {isLoading && companies.length === 0 ? (
                 <div className="flex items-center justify-center py-12">
                     <Spinner size="lg" />
@@ -132,72 +77,23 @@ export const CompaniesPage = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {companies.map((company) => {
-                        const latestInvestment = getLatestInvestment(company)
-                        const returnMultiple = calculateReturnMultiple(company)
-                        const initialInvestment = company.investments[0]
-    
-                        return (
-                            <div key={company.id} className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-                                <div className="flex justify-between items-start mb-4">
-                                    <div>
-                                        <h3 className="text-lg font-semibold text-gray-900">{company.name}</h3>
-                                        <p className="text-sm text-gray-700">{company.sector}</p>
-                                    </div>
-                                    <span className={`px-3 py-1 rounded-full text-sm ${
-                                        company.status === 'ACTIVE' ? 'bg-green-100 text-green-800' :
-                                        company.status === 'ACQUIRED' ? 'bg-blue-100 text-blue-800' :
-                                        company.status === 'IPO' ? 'bg-purple-100 text-purple-800' :
-                                        'bg-gray-100 text-gray-800'
-                                    }`}>
-                                        {t(`statuses.${company.status.toLowerCase()}`)}
-                                    </span>
-                                </div>
-    
-                                <div className="space-y-2">
-                                    {initialInvestment && (
-                                        <div className="flex justify-between">
-                                            <span className="text-gray-700">{t('filters.initialInvestment')}</span>
-                                            <span className="font-medium text-gray-900">${initialInvestment.amount}M</span>
-                                        </div>
-                                    )}
-                                    {latestInvestment && (
-                                        <>
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-700">{t('filters.currentValuation')}</span>
-                                                <span className="font-medium text-gray-900">${latestInvestment.valuation}M</span>
-                                            </div>
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-700">{t('filters.latestRound')}</span>
-                                                <span className="font-medium text-gray-900">{latestInvestment.round}</span>
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-    
-                                <div className="mt-4 pt-4 border-t border-gray-100">
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-gray-700">{t('filters.returnMultiple')}</span>
-                                        <span className={`font-semibold ${
-                                            returnMultiple > 1 ? 'text-green-600' : 'text-red-600'
-                                        }`}>
-                                            {returnMultiple.toFixed(1)}x
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })}
+                    {companies.map((company) => (
+                        <CompanyCard key={company.id} company={company} />
+                    ))}
                 </div>
             )}
-    
+
             {showAddDialog && (
                 <AddCompanyDialog
                     onClose={() => setShowAddDialog(false)}
-                    onSubmit={(data) => addCompanyMutation.mutate(data)}
+                    onSubmit={(data) => {
+                        addCompanyMutation.mutate(data, {
+                            onSuccess: () => setShowAddDialog(false)
+                        })
+                    }}
                     isSubmitting={addCompanyMutation.isPending}
                 />
             )}
         </div>
-    )    
+    )
 }

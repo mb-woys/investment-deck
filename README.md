@@ -54,7 +54,7 @@ A Next.js application for tracking venture capital investments and portfolio com
    DATABASE_URL="postgresql://admin:password@localhost:5432/portfolio?schema=public"
    ```
 
-5. **Start the database**
+4. **Start Docker containers of the project**
    ```bash
    npm run docker:up
    ```
@@ -102,9 +102,4 @@ For detailed schema information, see `prisma/schema.prisma`
 
 ## Authentication
 
-WIP: The application will be using NextAuth.js for authentication. 
-Right now it's not implemented
-
-Demo credentials:
-- Email: admin@contrary.com
-- Password: password123
+Right now it's out of scope
