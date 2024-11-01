@@ -1,8 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Round, Investment } from '@prisma/client'
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useInvestments, useAddInvestment } from '@/hooks/useInvestments'
 import { AddInvestmentForm, type InvestmentFormData } from './components/AddInvestmentForm'
@@ -32,6 +31,10 @@ export const InvestmentsPage = ({ initialInvestments }: InvestmentsPageProps) =>
     const years = ['ALL', ...new Set(investments.map(i => 
         new Date(i.date).getFullYear().toString()
     ))].sort().reverse()
+
+    useEffect(() => {
+        setYearFilter('ALL')
+    }, [roundFilter])
 
     const handleAddInvestment = async (data: InvestmentFormData) => {
         try {

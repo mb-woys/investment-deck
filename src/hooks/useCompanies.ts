@@ -1,5 +1,4 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { API_ROUTES } from '@/routes'
 import { CompanyStatus, Company, Investment } from '@prisma/client'
 import { useTranslations } from 'next-intl'
 

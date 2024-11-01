@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CompanyStatus } from '@prisma/client'
 import { useTranslations } from 'next-intl'
-import { useParams } from 'next/navigation'
 import { AddCompanyDialog } from './components/AddCompanyDialog'
 import { CompanyCard } from './components/CompanyCard'
 import { Spinner } from '@/components/ui/Spinner'
@@ -11,7 +10,7 @@ import { useCompanies, useAddCompany } from '@/hooks/useCompanies'
 
 export const CompaniesPage = () => {
     const t = useTranslations('CompaniesPage')
-    const { locale } = useParams()
+
     const [showAddDialog, setShowAddDialog] = useState(false)
     const [statusFilter, setStatusFilter] = useState<CompanyStatus | 'ALL'>('ALL')
     const [sectorFilter, setSectorFilter] = useState<string>('ALL')
@@ -23,8 +22,11 @@ export const CompaniesPage = () => {
     
     const addCompanyMutation = useAddCompany()
 
-    // Get unique sectors for filter
     const sectors = ['ALL', ...new Set(companies.map(c => c.sector))]
+
+    useEffect(() => {
+        setSectorFilter('ALL')
+    }, [statusFilter])
 
     return (
         <div className="max-w-7xl mx-auto p-6">
@@ -42,6 +44,7 @@ export const CompaniesPage = () => {
                             <option key={status} value={status}>{t(`statuses.${status.toLowerCase()}`)}</option>
                         ))}
                     </select>
+
                     <select
                         value={sectorFilter}
                         onChange={(e) => setSectorFilter(e.target.value)}
@@ -52,6 +55,7 @@ export const CompaniesPage = () => {
                             <option key={sector} value={sector}>{sector}</option>
                         ))}
                     </select>
+
                     <button 
                         onClick={() => setShowAddDialog(true)}
                         className="bg-blue-600 text-white px-4 py-2 rounded-lg disabled:bg-blue-300 hover:bg-blue-700 transition-colors"
