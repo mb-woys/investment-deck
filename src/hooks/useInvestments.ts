@@ -28,8 +28,8 @@ export function useInvestments(filters: InvestmentFilters = {}) {
         queryKey: QUERY_KEYS.investmentFilters(filters),
         queryFn: async () => {
             const queryParams = new URLSearchParams()
-            if (filters.round && filters.round !== 'ALL') queryParams.append('round', filters.round)
-            if (filters.year && filters.year !== 'ALL') queryParams.append('year', filters.year)
+            if (filters.round) queryParams.append('round', filters.round)
+            if (filters.year) queryParams.append('year', filters.year)
 
             const response = await fetch(`/api/investments?${queryParams}`)
             if (!response.ok) {

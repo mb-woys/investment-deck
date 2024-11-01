@@ -13,7 +13,6 @@ interface InvestmentsPageProps {
 }
 
 export const InvestmentsPage = ({ initialInvestments }: InvestmentsPageProps) => {
-    const { locale } = useParams()
     const t = useTranslations('InvestmentsPage')
     const [showAddForm, setShowAddForm] = useState(false)
     const [roundFilter, setRoundFilter] = useState<Round | 'ALL'>('ALL')
@@ -23,12 +22,12 @@ export const InvestmentsPage = ({ initialInvestments }: InvestmentsPageProps) =>
         data: investments = initialInvestments, 
         isLoading,
         error
-    } = useInvestments(locale as string, {
+    } = useInvestments({
         round: roundFilter !== 'ALL' ? roundFilter : undefined,
         year: yearFilter !== 'ALL' ? yearFilter : undefined
     })
-
-    const addInvestment = useAddInvestment(locale as string)
+    
+    const addInvestment = useAddInvestment()
 
     const years = ['ALL', ...new Set(investments.map(i => 
         new Date(i.date).getFullYear().toString()
